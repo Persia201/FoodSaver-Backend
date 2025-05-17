@@ -12,28 +12,22 @@ connectDB();
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
-// CORS (Allow frontend to access backend API)
-app.use(cors({
-  origin: 'https://foodsaver-frontend.vercel.app', // Replace with your actual frontend domain if needed
-  credentials: true
-}));
-
-// Health check endpoints
+// Health Check
 app.get('/', (req, res) => {
   res.send('FoodSaver API Running ✅');
 });
-
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'API is healthy' });
 });
 
-// API Routes
+// Routes
 app.use('/api/food', foodRoutes);
 app.use('/api/users', userRoutes);
 
-// Dynamic port for deployment (fallback to 8080 locally)
-const PORT = process.env.PORT || 8080;
+// Use the port from environment (Render or Railway sets this automatically)
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
