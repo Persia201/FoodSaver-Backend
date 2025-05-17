@@ -15,6 +15,9 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.send('FoodSaver API Running ✅');
 });
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'API is healthy' });
+});
 
 app.use('/api/food', foodRoutes);
 app.use('/api/users', userRoutes);
